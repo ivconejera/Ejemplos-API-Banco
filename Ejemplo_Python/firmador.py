@@ -4,7 +4,9 @@ import requests
 from config import files, variables_generales, firmar
 import jwt
 
-token = jwt.encode({'expiration': firmar.expiration, 'rut': firmar.rut, 'proposito': firmar.proposito, 'entidad': firmar.entidad},
+rut_firmador = raw_input("Rut firmado:\n")
+
+token = jwt.encode({'expiration': firmar.expiration, 'rut': rut_firmador, 'proposito': firmar.proposito, 'entidad': firmar.entidad},
                    variables_generales.SECRET,
                    algorithm='HS256')
 
@@ -37,17 +39,18 @@ data['files'].append(archivo2)
 
 # Subimos archivos y Obtenemos session
 headers={"Content-Type": "application/json; charset=UTF-8", 'User-agent': 'Mozilla/5.0'}
-import pdb;pdb.set_trace()
 r = requests.post(variables_generales.URL, json=data, headers=headers)
 try:
-    session_token =  str(r.json()['session_token'])
+    session_token = str(r.json()['session_token'])
 except:
     print r.text
     exit()
 
+otp = raw_input("OTP:\n")
+
 # Firmamos Archivos subidos
 headers={"Content-Type": "application/json; charset=UTF-8",
-         "OTP": firmar.otp,
+         "OTP": otp,
          'User-agent': 'Mozilla/5.0'}
 r = requests.get(variables_generales.URL + "/" + session_token, headers=headers)
 print r.text

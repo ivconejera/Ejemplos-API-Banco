@@ -25,8 +25,8 @@ class variables_generales:
 
 class firmar:
 
-    otp = "475848"
-    rut = "18020784"
+    #otp = "880292"
+    #rut = "11111111-1"
     expiration = "2016-07-14T01:00:00"
     entidad = "minsegpres"
-    proposito = "GENERAL5"
+    proposito = "GENERAL"
